@@ -34,8 +34,13 @@ This is the in-house individual-level GWAS dataset that you have access to.
 4) SNP heritability estimator of the two traits. 
 For example, the heritability estimated using the GREML method https://cnsgenomics.com/software/gcta/#Overview. The GREML estimator of many complex traits have been made publicly available, such as from https://nealelab.github.io/UKBB_ldsc/ and https://atlas.ctglab.nl/. 
 
+5) Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
 
-5) Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. We recommand to use a small prunning R2 parameter (such as R2=0.05). 
+Demo code: 
+
+~/plink --bfile your_plink_data --indep-pairwise 50 5 0.1 --out list_pruned
+~/plink --bfile your_plink_data  --extract list_pruned.prune.in --make-bed  --out your_plink_data_pruned
+
 
 ## Step 1: construct the cross-trait polygnic risk scores.
 
