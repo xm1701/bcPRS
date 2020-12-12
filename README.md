@@ -26,13 +26,14 @@ To generate cross-trait PRS and obtain the bias-corrected genetic correlation es
 2) Sample size of the above GWAS;  
 3) Individual-level genetic data of trait 2;
 4) SNP heritability estimator of the two traits. For example, using the GREML method https://cnsgenomics.com/software/gcta/#Overview. 
-
+5) Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping on your individual-level genetic data. We recommand to use a small prunning R2 parameter (such as R2=0.05). 
 ## Step 1: construct the cross-trait polygnic risk scores.
 
 We recommand the following two options to generate the cross-trait polygnic risk scores. 
 
 ###Option 1: Within UK Biobank 
 
+If you are using UK Biobank data, we suggest the number of independent genetic variants to be 150k. 
 
 We have tested two options for p 
 
