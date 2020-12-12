@@ -13,7 +13,10 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 1. Construct the cross-trait polygnic risk scores. 
 
 
-# Example and demo code
+# Simulation codes to understand the phenomenon
+
+
+# Example
 
 ## Step 0: preparation of input data
 
