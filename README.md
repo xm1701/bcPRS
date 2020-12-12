@@ -12,6 +12,10 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 
 1. Construct the cross-trait polygnic risk scores. 
 
+2. Obtain the raw estimator of genetic correlation.
+
+3. Perform bias-correction using the bcPRS package. 
+
 
 # Simulation codes to understand the phenomenon
 
@@ -23,6 +27,8 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 ## Step 1: construct the cross-trait polygnic risk scores.
 
 We recommend to use genetic variants (i.e., SNPs) after linkage disequilibrium (LD)-based pruning (or clumping). No thresholding is required. That is, all pruned SNPs are use to constructe the polygenic risk score. 
+
+## Step 2: construct the cross-trait polygnic risk scores.
 
 
 
