@@ -36,7 +36,7 @@ For example, the heritability estimated using the GREML method https://cnsgenomi
 
 5) Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
 
-Demo code: 
+Demo code of LD-based prunning with your genetic data in plink binary format: 
 
 ~/plink --bfile your_plink_data --indep-pairwise 50 5 0.1 --out list_pruned
 
@@ -55,10 +55,13 @@ We have tested two options for p
 
 We recommend to use genetic variants (i.e., SNPs) after linkage disequilibrium (LD)-based pruning (or clumping). No thresholding is required. That is, all pruned SNPs are use to constructe the polygenic risk score. 
 
-## Step 2: construct the cross-trait polygnic risk scores.
+Exampel code 
 
+## Step 2: Obtain the raw estimator of genetic correlation.
+
+Age, gender, genetic PCs, etc. 
 
 ## Step 3: Perform bias-correction using the bcPRS package. 
 
-
+Exampel code 
 
