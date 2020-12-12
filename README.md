@@ -17,12 +17,15 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 3. Perform bias-correction using the bcPRS package. 
 
 
-# Simulation codes to understand the phenomenon
-
-
-# Example
+# Example with demo codes
 
 ## Step 0: preparation of input data
+To generate cross-trait PRS and obtain the bias-corrected genetic correlation estimator between trait 1 and trait 2, we need the following data:
+
+1) GWAS summary statistics of trait 1;
+2) Sample size of GWAS 
+3) Individual-level genetic data of trait 2;
+4) SNP heritability estimator of the two traits. 
 
 ## Step 1: construct the cross-trait polygnic risk scores.
 
@@ -31,4 +34,7 @@ We recommend to use genetic variants (i.e., SNPs) after linkage disequilibrium (
 ## Step 2: construct the cross-trait polygnic risk scores.
 
 
+## Step 3: Perform bias-correction using the bcPRS package. 
+
+We have tested two options for p 
 
