@@ -39,6 +39,7 @@ For example, the heritability estimated using the GREML method https://cnsgenomi
 Demo code: 
 
 ~/plink --bfile your_plink_data --indep-pairwise 50 5 0.1 --out list_pruned
+
 ~/plink --bfile your_plink_data  --extract list_pruned.prune.in --make-bed  --out your_plink_data_pruned
 
 
