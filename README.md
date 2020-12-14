@@ -22,7 +22,7 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 ## Step 0: preparation of input data
 To generate cross-trait PRS and obtain the bias-corrected genetic correlation estimator between trait 1 and trait 2, we need the following data:
 
-### GWAS summary statistics of trait 1. 
+### 1) GWAS summary statistics of trait 1. 
 Regular full GWAS summary statistics dataset available from GWAS data consortium, such as GWAS catalog https://www.ebi.ac.uk/gwas/downloads/summary-statistics.
 For example, below is the GWAS summary statistics of trait 1 (trait1_sumstat.txt)
 
@@ -42,22 +42,22 @@ And we will need the following columns: snpid, A1, A2, Beta
 
 awk 'NR>1{{print $2, $4, $5, $8}}' < trait1_sumstat.txt > trait1_sumstat_prs.txt
 
-### Sample size of the above GWAS.
+### 2) Sample size of the above GWAS.
 Such information is typically available along with the GWAS summary statistics dataset or can be found in the reference paper. 
 In the above example, the column "N" 
 provides this information (n~50k). 
 
-### Individual-level genetic data of trait 2.
+### 3) Individual-level genetic data of trait 2.
 This is the in-house individual-level GWAS dataset that you have access to. We assume your data is in plink binary format (.bim/fam/bed). 
 
-### SNP heritability estimator of the two traits. 
+### 4) SNP heritability estimator of the two traits. 
 For example, if you have access to the individual-level GWAS data, the heritability can be estimated using the GREML method https://cnsgenomics.com/software/gcta/#Overview. 
 
 If individual-level GWAS data are not available, you can also estimate the heritability using, for example, https://github.com/bulik/ldsc, with summary-level GWAS data. 
 
 In addition, the GREML estimator of many complex traits have been made publicly available, such as from https://nealelab.github.io/UKBB_ldsc/ and https://atlas.ctglab.nl/.
 
-### Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
+### 5) Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
 
 Demo code of LD-based prunning with your genetic data in plink binary format (window size 50, step 5, R2 threshold 0.1): 
 
