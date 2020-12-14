@@ -73,7 +73,7 @@ awk '!( ($5=="A" && $6=="T") || \
 
 ## Step 2: Obtain the raw estimator of genetic correlation.
 
-Age, gender, genetic PCs, etc. 
+After 
 
 ## Step 3: Perform bias-correction using the bcPRS package. 
 
