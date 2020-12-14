@@ -54,11 +54,13 @@ This is the in-house individual-level GWAS dataset that you have access to. We a
 ### 4) SNP heritability estimator of the two traits. 
 For example, if you have access to the individual-level GWAS data, the heritability can be estimated using the GREML method https://cnsgenomics.com/software/gcta/#Overview. 
 
-If individual-level GWAS data are not available, you can also estimate the heritability using, for example, https://github.com/bulik/ldsc, with summary-level GWAS data. 
+If individual-level GWAS data are not available, you can also estimate the heritability using, for example, LDSC https://github.com/bulik/ldsc, with summary-level GWAS data. 
 
 In addition, the GREML estimator of many complex traits have been made publicly available, such as from https://nealelab.github.io/UKBB_ldsc/ and https://atlas.ctglab.nl/.
 
-### 5) Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
+### 5) Number of independent genetic variants. 
+
+This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
 
 Demo code of LD-based prunning with your genetic data in plink binary format (window size 50, step 5, R2 threshold 0.1): 
 
