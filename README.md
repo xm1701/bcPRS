@@ -39,7 +39,7 @@ CHR	SNP	POS	A1	A2	N	AF1	BETA	SE	P
 
 ...
 
-And we will need the following columns: snpid, A1, A2, Beta
+And we will need the following columns: SNP, A1, A2, BETA
 
 awk 'NR>1{{print $2, $4, $5, $8}}' < trait1_sumstat.txt > trait1_sumstat_prs.txt
 
