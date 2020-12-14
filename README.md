@@ -80,6 +80,7 @@ Typically, we can fit a linear model to estimate the partial correlation between
 ## Step 3: Perform bias-correction using the bcPRS package. 
 
 With this raw estimator of genetic correlation (r_g) estimated in Step 2, we can use the bcPRS package to obtain the bias-corrected estimator. 
+For example, 
 
 
 Exampel code 
