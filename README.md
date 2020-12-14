@@ -80,10 +80,11 @@ Typically, we can fit a linear model to estimate the partial correlation between
 ## Step 3: Perform bias-correction using the bcPRS package. 
 
 With this raw estimator of genetic correlation (r_g) estimated in Step 2, we can use the bcPRS package to obtain the bias-corrected estimator. 
-For example, 
+For example, suppose the r_g-0.1, training GWAS sample size is 50k, number of indpendent genetic variants is 500k, hertability of the two traits are both 0.5, and the training and testing GWAS are independent (overlapping samples is 0), then we can apply the following function: 
 
+bc_prs(raw_estimator=0.1,n_train=50000,p_indep=500000, h2_trait1=0.5,h2_trait2=0.5,n_overlap=0)
 
-Exampel code 
+And the bias-corrected PRS-based geneticcorrelation estimator is 0.648. 
 
 # Example
 
