@@ -75,9 +75,11 @@ awk '!( ($5=="A" && $6=="T") || \
 ## Step 2: Obtain the raw estimator of genetic correlation.
 
 With the PRS of trait 1 generated in Step 1, we can evaludate the genetic correlation between trait 1 and trait 2 in the testing GWAS. 
-Typically, we can fit a linear model between trait 2 and PRS of trait 1, while adjusting the effects of age, gender, and genetic principal components.  
+Typically, we can fit a linear model to estimate the partial correlation between trait 2 and PRS of trait 1, while adjusting the effects of age, gender, and genetic principal components.  
 
 ## Step 3: Perform bias-correction using the bcPRS package. 
+
+With this raw estimator of genetic correlation (r_g) estimated in Step 2, we can use the bcPRS package to obtain the bias-corrected estimator. 
 
 
 Exampel code 
