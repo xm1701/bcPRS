@@ -22,7 +22,7 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 ## Step 0: preparation of input data
 To generate cross-trait PRS and obtain the bias-corrected genetic correlation estimator between trait 1 and trait 2, we need the following data:
 
-1) GWAS summary statistics of trait 1. 
+### GWAS summary statistics of trait 1. 
 Regular full GWAS summary statistics dataset available from GWAS data consortium, such as GWAS catalog https://www.ebi.ac.uk/gwas/downloads/summary-statistics.
 For example, below is the GWAS summary statistics of trait 1 (trait1_sumstat.txt)
 
