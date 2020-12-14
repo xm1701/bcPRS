@@ -24,9 +24,7 @@ To generate cross-trait PRS and obtain the bias-corrected genetic correlation es
 
 1) GWAS summary statistics of trait 1. 
 Regular full GWAS summary statistics dataset available from GWAS data consortium, such as GWAS catalog https://www.ebi.ac.uk/gwas/downloads/summary-statistics.
-For example, below is the GWAS summary statistics of trait 1 
-
-trait1_sumstat.txt
+For example, below is the GWAS summary statistics of trait 1 (trait1_sumstat.txt)
 
 head trait1_sumstat.txt 
 
