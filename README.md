@@ -51,19 +51,25 @@ We recommand the following procedure to generate the cross-trait polygnic risk s
 
 If both of your training and testing daat come from one study (e.g., UK Biobank), you can use either unimputed genotyping genetic variants or imputed genetic variants to construct your PRS. 
 
-Demo code
+Demo code of constructing PRS
 
 ~/plink --bfile your_plink_data_pruned   --score  your_gwas_summary_statistics.file  --out prs_scores
 
 In your_gwas_summary_statistics.file, typically we have the following columns: snpid ,A1, A2, and Zscore.
 More information about --score function can be found at https://www.cog-genomics.org/plink/1.9/score. 
 
-We have tested two options for p 
+Note: to perform bias-correction in Step 3, we perform LD-based pruning but no p-value thresholding is required in this step.  
 
-We recommend to use genetic variants (i.e., SNPs) after linkage disequilibrium (LD)-based pruning (or clumping). No thresholding is required. That is, all pruned SNPs are use to constructe the polygenic risk score. 
+###Option 2: Across two studies (e.g., UK Biobank and a non-UKB study) 
 
-###Option 2:Across two studies 
-Exampel code 
+In this situation, we recommend to use imputed genetic variants to increase overlapping rate. We also need to remove ambiguous genetic variants (i.e. variant with complementary alleles, either C/G or A/T) before generating PRS.
+
+Demo code of removing ambiguous genetic variants (suppose #5 #6 columns are your A1 and A2 data)
+
+awk '!( ($5=="A" && $6=="T") || \
+($5=="T" && $6=="A") || \
+($5=="G" && $6=="C") || \
+($5=="C" && $6=="G")) {print $2}' your_plink_data_pruned.bim > your_plink_data_pruned_atgc.list
 
 ## Step 2: Obtain the raw estimator of genetic correlation.
 
