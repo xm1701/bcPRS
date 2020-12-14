@@ -110,3 +110,10 @@ $corrected_estimator
 Thus, the bias-corrected PRS-based geneticcorrelation estimator is 0.648. 
 
 Note: 
+
+1. The above example focuses on the situation in which we have the PRS of one trait and the individual-level data of the second trait. Another common case in practice is that we have PRS for both of the two traits. We have also studied this case in our preprint, and the function to correct the bias is bc_prs2() in the package. 
+
+2. The above example assumes that the training and testing GWAS is independent. 
+Suppose training and testing GWAS are partially overlapped and the number of overlapping samples is known, you can input this number in the bc_prs() function. 
+If the overlapping number of unknown, one conservative option is to set n_overlap=n_test, where n_test is the sample size of your testing GWAS. 
+
