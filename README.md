@@ -31,9 +31,13 @@ trait1_sumstat.txt
 head trait1_sumstat.txt 
 
 CHR	SNP	POS	A1	A2	N	AF1	BETA	SE	P
+
 1	rs4970383	838555	A	C	49916	0.24401	17.1263	12.91	0.184642
+
 1	rs4475691	846808	T	C	49786	0.197819	21.5965	13.9218	0.120837
+
 1	rs1806509	853954	C	A	49813	0.391651	2.93812	11.3133	0.795091
+
 ...
 
 And we will need the following columns: snpid, A1, A2, Beta
