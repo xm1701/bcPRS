@@ -4,7 +4,7 @@ Bias-corrected genetic correlation estimators of cross-trait polygenic risk scor
 
 # Description
 
-This tutorial details the steps of obtaining bias-corrected genetic correlation estimator using cross-trait polygenic risk scores. The preprint could be found at https://arxiv.org/abs/1903.01301. Briefly, the genetic correlation between two complex traits estimated by cross-trait PRS can be biased towarded zero. We quantify the asymptotic limit of this bias and propose the bias-corrected estimator of genetic correlation. 
+This tutorial details the steps of obtaining bias-corrected genetic correlation estimator using cross-trait polygenic risk scores. Briefly, the genetic correlation between two complex traits estimated by cross-trait PRS can be biased towarded zero. We quantify the asymptotic limit of this bias and propose the bias-corrected estimator of PRS-based genetic correlation. The preprint can be found at https://arxiv.org/abs/1903.01301. 
 
 # Overview
 
@@ -36,25 +36,33 @@ For example, the heritability estimated using the GREML method https://cnsgenomi
 
 5) Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
 
-Demo code of LD-based prunning with your genetic data in plink binary format: 
+Demo code of LD-based prunning with your genetic data in plink binary format (window size 50, step 5, R2 threshold 0.1): 
 
 ~/plink --bfile your_plink_data --indep-pairwise 50 5 0.1 --out list_pruned
 
 ~/plink --bfile your_plink_data  --extract list_pruned.prune.in --make-bed  --out your_plink_data_pruned
 
 
-## Step 1: construct the cross-trait polygnic risk scores.
+## Step 1: construct the cross-trait polygenic risk scores.
 
-We recommand the following two options to generate the cross-trait polygnic risk scores. 
+We recommand the following procedure to generate the cross-trait polygnic risk scores. 
 
-###Option 1: Within UK Biobank 
+###Option 1: Within one study (e.g., UK Biobank) 
 
-If you are using UK Biobank data, we suggest the number of independent genetic variants to be 150k. 
+If both of your training and testing daat come from one study (e.g., UK Biobank), you can use either unimputed genotyping genetic variants or imputed genetic variants to construct your PRS. 
+
+Demo code
+
+~/plink --bfile your_plink_data_pruned   --score  your_gwas_summary_statistics.file  --out prs_scores
+
+In your_gwas_summary_statistics.file, typically we have the following columns: snpid ,A1, A2, and Zscore.
+More information about --score function can be found at https://www.cog-genomics.org/plink/1.9/score. 
 
 We have tested two options for p 
 
 We recommend to use genetic variants (i.e., SNPs) after linkage disequilibrium (LD)-based pruning (or clumping). No thresholding is required. That is, all pruned SNPs are use to constructe the polygenic risk score. 
 
+###Option 2:Across two studies 
 Exampel code 
 
 ## Step 2: Obtain the raw estimator of genetic correlation.
