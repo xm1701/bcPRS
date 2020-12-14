@@ -24,15 +24,36 @@ To generate cross-trait PRS and obtain the bias-corrected genetic correlation es
 
 1) GWAS summary statistics of trait 1. 
 Regular full GWAS summary statistics dataset available from GWAS data consortium, such as GWAS catalog https://www.ebi.ac.uk/gwas/downloads/summary-statistics.
+For example, below is the GWAS summary statistics of trait 1 
+
+trait1_sumstat.txt
+
+head trait1_sumstat.txt 
+
+CHR	SNP	POS	A1	A2	N	AF1	BETA	SE	P
+1	rs4970383	838555	A	C	49916	0.24401	17.1263	12.91	0.184642
+1	rs4475691	846808	T	C	49786	0.197819	21.5965	13.9218	0.120837
+1	rs1806509	853954	C	A	49813	0.391651	2.93812	11.3133	0.795091
+...
+
+And we will need the following columns: snpid, A1, A2, Beta
+
+awk 'NR>1{{print $2, $4, $5, $8}}' < trait1_sumstat.txt > trait1_sumstat_prs.txt
 
 2) Sample size of the above GWAS.
 Such information is typically available along with the GWAS summary statistics dataset or can be found in the reference paper. 
+In the above example, the column "N" 
+provides this information (n~50k). 
 
 3) Individual-level genetic data of trait 2.
-This is the in-house individual-level GWAS dataset that you have access to. 
+This is the in-house individual-level GWAS dataset that you have access to. We assume your data is in plink binary format (.bim/fam/bed). 
 
 4) SNP heritability estimator of the two traits. 
-For example, the heritability estimated using the GREML method https://cnsgenomics.com/software/gcta/#Overview. The GREML estimator of many complex traits have been made publicly available, such as from https://nealelab.github.io/UKBB_ldsc/ and https://atlas.ctglab.nl/. 
+For example, if you have access to the individual-level GWAS data, the heritability can be estimated using the GREML method https://cnsgenomics.com/software/gcta/#Overview. 
+
+If individual-level GWAS data are not available, you can also estimate the heritability using, for example, https://github.com/bulik/ldsc, with summary-level GWAS data. 
+
+In addition, the GREML estimator of many complex traits have been made publicly available, such as from https://nealelab.github.io/UKBB_ldsc/ and https://atlas.ctglab.nl/.
 
 5) Number of independent genetic variants. This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
 
@@ -53,19 +74,18 @@ If both of your training and testing daat come from one study (e.g., UK Biobank)
 
 Demo code of constructing PRS
 
-~/plink --bfile your_plink_data_pruned   --score  your_gwas_summary_statistics.file  --out prs_scores
+~/plink --bfile your_plink_data_pruned   --score  trait1_sumstat_prs.txt  --out prs_scores
 
-In your_gwas_summary_statistics.file, typically we have the following columns: snpid ,A1, A2, and Zscore.
 More information about --score function can be found at https://www.cog-genomics.org/plink/1.9/score. 
 
-Note: to perform bias-correction in Step 3, we perform LD-based pruning but no p-value thresholding is required in this step.  
+Note: No p-value thresholding is required in this step. 
 
 ###Case 2: Across two studies (e.g., UK Biobank and a non-UKB study) 
 
 In this situation, we recommend to use imputed genetic variants to increase overlapping rate of genetic variants genotyped in two studies. 
 We also need to remove ambiguous genetic variants (i.e. variant with complementary alleles, either C/G or A/T) before generating PRS.
 
-Demo code of removing ambiguous genetic variants (suppose #5 #6 columns are your A1 and A2 data)
+Demo code to obtain the list of ambiguous genetic variants (suppose #5 #6 columns are your A1 and A2 in your plink bim file)
 
 awk '!( ($5=="A" && $6=="T") || \
 ($5=="T" && $6=="A") || \
@@ -87,6 +107,6 @@ bc_prs(raw_estimator=0.1,n_train=50000,p_indep=500000, h2_trait1=0.5,h2_trait2=0
 $corrected_estimator
 [1] 0.6480741
 
-The bias-corrected PRS-based geneticcorrelation estimator is 0.648. 
+Thus, the bias-corrected PRS-based geneticcorrelation estimator is 0.648. 
 
-
+Note: 
