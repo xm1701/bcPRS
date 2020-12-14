@@ -17,7 +17,7 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 3. Perform bias-correction using the bcPRS package. 
 
 
-# Example with demo codes
+# Demo codes
 
 ## Step 0: preparation of input data
 To generate cross-trait PRS and obtain the bias-corrected genetic correlation estimator between trait 1 and trait 2, we need the following data:
@@ -78,4 +78,6 @@ Age, gender, genetic PCs, etc.
 ## Step 3: Perform bias-correction using the bcPRS package. 
 
 Exampel code 
+
+# Example
 
