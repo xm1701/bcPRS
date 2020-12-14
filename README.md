@@ -47,7 +47,7 @@ Demo code of LD-based prunning with your genetic data in plink binary format (wi
 
 We recommand the following procedure to generate the cross-trait polygnic risk scores. 
 
-###Option 1: Within one study (e.g., UK Biobank) 
+###Case 1: Within one study (e.g., UK Biobank) 
 
 If both of your training and testing daat come from one study (e.g., UK Biobank), you can use either unimputed genotyping genetic variants or imputed genetic variants to construct your PRS. 
 
@@ -60,9 +60,10 @@ More information about --score function can be found at https://www.cog-genomics
 
 Note: to perform bias-correction in Step 3, we perform LD-based pruning but no p-value thresholding is required in this step.  
 
-###Option 2: Across two studies (e.g., UK Biobank and a non-UKB study) 
+###Case 2: Across two studies (e.g., UK Biobank and a non-UKB study) 
 
-In this situation, we recommend to use imputed genetic variants to increase overlapping rate. We also need to remove ambiguous genetic variants (i.e. variant with complementary alleles, either C/G or A/T) before generating PRS.
+In this situation, we recommend to use imputed genetic variants to increase overlapping rate of genetic variants genotyped in two studies. 
+We also need to remove ambiguous genetic variants (i.e. variant with complementary alleles, either C/G or A/T) before generating PRS.
 
 Demo code of removing ambiguous genetic variants (suppose #5 #6 columns are your A1 and A2 data)
 
@@ -73,9 +74,11 @@ awk '!( ($5=="A" && $6=="T") || \
 
 ## Step 2: Obtain the raw estimator of genetic correlation.
 
-After 
+With the PRS of trait 1 generated in Step 1, we can evaludate the genetic correlation between trait 1 and trait 2 in the testing GWAS. 
+Typically, we can fit a linear model between trait 2 and PRS of trait 1, while adjusting the effects of age, gender, and genetic principal components.  
 
 ## Step 3: Perform bias-correction using the bcPRS package. 
+
 
 Exampel code 
 
