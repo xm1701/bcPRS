@@ -16,6 +16,7 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 
 3. Perform bias-correction using the bcPRS package. 
 
+Below is an example with demo codes. 
 
 # Example and Demo codes
 
@@ -23,11 +24,11 @@ There are three steps to obtain the bias-corrected estimator of genetic correlat
 To generate cross-trait PRS and obtain the bias-corrected genetic correlation estimator between trait 1 and trait 2, we need the following data:
 
 ### 1) GWAS summary statistics of trait 1. 
-Regular full GWAS summary statistics dataset available from GWAS data consortium, such as GWAS catalog https://www.ebi.ac.uk/gwas/downloads/summary-statistics.
+We need regular full GWAS summary statistics dataset, which are typically available from GWAS data consortium, such as GWAS catalog https://www.ebi.ac.uk/gwas/downloads/summary-statistics.
 
-For example, suppose trait1_sumstat.txt below is the GWAS summary statistics of trait 1. 
+For example, suppose "trait1_sumstat.txt" below is the GWAS summary statistics of trait 1. 
 
-head trait1_sumstat.txt 
+> head trait1_sumstat.txt 
 
 CHR	SNP	POS	A1	A2	N	AF1	BETA	SE	P
 
@@ -41,33 +42,34 @@ CHR	SNP	POS	A1	A2	N	AF1	BETA	SE	P
 
 And we will need the following columns: SNP, A1, A2, BETA
 
-awk 'NR>1{{print $2, $4, $5, $8}}' < trait1_sumstat.txt > trait1_sumstat_prs.txt
+> awk 'NR>1{{print $2, $4, $5, $8}}' < trait1_sumstat.txt > trait1_sumstat_prs.txt
 
 ### 2) Sample size of the above GWAS.
-Such information is typically available along with the GWAS summary statistics dataset or can be found in the reference paper. 
+Such information is typically available along with the GWAS summary statistics dataset or can be found in its reference paper. 
 In the above example, the column "N" 
 provides this information (n~50k). 
 
 ### 3) Individual-level genetic data of trait 2.
-This is the in-house individual-level GWAS dataset that you have access to. We assume your data is in plink binary format (.bim/fam/bed). 
+This is the in-house individual-level GWAS dataset that you have access to. We assume your data is in plink binary format (.bim/.fam/.bed) (https://www.cog-genomics.org/plink/1.9/input#bed). 
 
 ### 4) SNP heritability estimator of the two traits. 
 For example, if you have access to the individual-level GWAS data, the heritability can be estimated using the GREML method https://cnsgenomics.com/software/gcta/#Overview. 
 
 If individual-level GWAS data are not available, you can also estimate the heritability using, for example, LDSC https://github.com/bulik/ldsc, with summary-level GWAS data. 
 
-In addition, the GREML estimator of many complex traits have been made publicly available, such as from https://nealelab.github.io/UKBB_ldsc/ and https://atlas.ctglab.nl/.
+In addition, the heritability estimator of many complex traits have been made publicly available, such as from https://nealelab.github.io/UKBB_ldsc/ and https://atlas.ctglab.nl/.
 
 ### 5) Number of independent genetic variants. 
 
 This can be obtained by performing LD-based prunning or clumping via plink (https://www.cog-genomics.org/plink2/) on your individual-level genetic data. 
 
-Demo code of LD-based prunning with your genetic data in plink binary format (window size 50, step 5, R2 threshold 0.1): 
+Demo code of LD-based prunning with your genetic data in plink binary format (e.g., window size 50, step 5, R2 threshold 0.1): 
 
-~/plink --bfile your_plink_data --indep-pairwise 50 5 0.1 --out list_pruned
+> ~/plink --bfile your_plink_data --indep-pairwise 50 5 0.1 --out list_pruned
 
-~/plink --bfile your_plink_data  --extract list_pruned.prune.in --make-bed  --out your_plink_data_pruned
+> ~/plink --bfile your_plink_data  --extract list_pruned.prune.in --make-bed  --out your_plink_data_pruned
 
+Note: We recommand the clumping/pruning R2 to be 0.05 or 0.1 when estimating the number of independent genetic variants. 
 
 ## Step 1: construct the cross-trait polygenic risk scores.
 
@@ -79,7 +81,7 @@ If both of your training and testing daat come from one study (e.g., UK Biobank)
 
 Demo code of constructing PRS
 
-~/plink --bfile your_plink_data_pruned   --score  trait1_sumstat_prs.txt  --out prs_scores
+> ~/plink --bfile your_plink_data_pruned --score  trait1_sumstat_prs.txt  --out prs_scores
 
 More information about --score function can be found at https://www.cog-genomics.org/plink/1.9/score. 
 
@@ -92,10 +94,12 @@ We also need to remove ambiguous genetic variants (i.e. variant with complementa
 
 Demo code to obtain the list of ambiguous genetic variants (suppose #5 #6 columns are your A1 and A2 in your plink bim file)
 
-awk '!( ($5=="A" && $6=="T") || \
+> awk '!( ($5=="A" && $6=="T") || \
 ($5=="T" && $6=="A") || \
 ($5=="G" && $6=="C") || \
 ($5=="C" && $6=="G")) {print $2}' your_plink_data_pruned.bim > your_plink_data_pruned_atgc.list
+
+Note: In this step, the LD-based pruning may use a clumping/pruning R2 that is different from the one use to estimate the number of independent genetic variants. For example, you can use a larger R2 to increase the overlapping rate of genetic variants across the two datassets. 
 
 ## Step 2: Obtain the raw estimator of genetic correlation.
 
@@ -104,10 +108,13 @@ Typically, we can fit a linear model to estimate the partial correlation between
 
 ## Step 3: Perform bias-correction using the bcPRS package. 
 
-With this raw estimator of genetic correlation (r_g) estimated in Step 2, we can use the bcPRS package to obtain the bias-corrected estimator. 
-For example, suppose the r_g-0.1, training GWAS sample size is 50k, number of indpendent genetic variants is 500k, hertability of the two traits are both 0.5, and the training and testing GWAS are independent (overlapping samples is 0), then we can apply the following function: 
+With the raw estimator of genetic correlation (r_g) estimated in Step 2, we can use the bcPRS package to obtain the bias-corrected estimator. 
+For example, suppose the r_g=0.1, training GWAS sample size is 50k, number of indpendent genetic variants is 500k, hertability of the two traits are both 0.5, and the training and testing GWAS are independent (number of overlapping samples is 0), then we can apply the following function in R: 
 
-bc_prs(raw_estimator=0.1,n_train=50000,p_indep=500000, h2_trait1=0.5,h2_trait2=0.5,n_overlap=0)
+> library(bcPRS)
+> bc_prs(raw_estimator=0.1,n_train=50000,p_indep=500000, h2_trait1=0.5,h2_trait2=0.5,n_overlap=0)
+
+which yields 
 
 $corrected_estimator
 [1] 0.6480741
@@ -116,9 +123,9 @@ Thus, the bias-corrected PRS-based geneticcorrelation estimator is 0.648.
 
 Note: 
 
-1. The above example focuses on the situation in which we have the PRS of one trait and the individual-level data of the second trait. Another common case in practice is that we have PRS for both of the two traits. We have also studied this case in our preprint, and the function to correct the bias is bc_prs2() in the package. 
+1. The above example focuses on the situation in which we have the PRS of one trait (trait 1) and the individual-level data of the second trait (trait 2). Another common case in practice is that we have PRS for both of the two traits. We have also studied this case in our preprint, and the function to correct the bias is implemented as bc_prs2() in the package. 
 
 2. The above example assumes that the training and testing GWAS is independent. 
-Suppose training and testing GWAS are partially overlapped and the number of overlapping samples is known, you can input this number in the bc_prs() function. 
-If the overlapping number of unknown, one conservative option is to set n_overlap=n_test, where n_test is the sample size of your testing GWAS. 
+If training and testing GWAS are partially overlapped and the number of the number of overlapping samples is known, you can input this number in the bc_prs() function. 
+If the overlapping number of unknown, one conservative option is to set n_overlap=n_test, where n_test is the sample size of your testing GWAS. This will give you the lower bound of genetic correlation estimator. 
 
