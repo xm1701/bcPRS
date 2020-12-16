@@ -112,6 +112,7 @@ With the raw estimator of genetic correlation (r_g) estimated in Step 2, we can 
 For example, suppose the r_g=0.1, training GWAS sample size is 50k, number of indpendent genetic variants is 500k, hertability of the two traits are both 0.5, and the training and testing GWAS are independent (number of overlapping samples is 0), then we can apply the following function in R: 
 
 > library(bcPRS)
+
 > bc_prs(raw_estimator=0.1,n_train=50000,p_indep=500000, h2_trait1=0.5,h2_trait2=0.5,n_overlap=0)
 
 which yields 
