@@ -127,5 +127,5 @@ Note:
 
 2. The above example assumes that the training and testing GWAS is independent. 
 If training and testing GWAS are partially overlapped and the number of the number of overlapping samples is known, you can input this number in the bc_prs() function. 
-If the overlapping number of unknown, one conservative option is to set n_overlap=n_test, where n_test is the sample size of your testing GWAS. This will give you the lower bound of genetic correlation estimator. 
+If the overlapping number of unknown, one conservative option is to set n_overlap=n_test, where n_test is the sample size of your testing GWAS. This will give you the lower bound of the bias-corrected genetic correlation estimator. 
 
