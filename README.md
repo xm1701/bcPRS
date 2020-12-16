@@ -117,8 +117,8 @@ For example, suppose the r_g=0.1, training GWAS sample size is 50k, number of in
 
 which yields 
 
-$corrected_estimator
-[1] 0.6480741
+> $corrected_estimator
+> [1] 0.6480741
 
 Thus, the bias-corrected PRS-based geneticcorrelation estimator is 0.648. 
 
